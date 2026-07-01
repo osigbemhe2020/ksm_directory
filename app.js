@@ -1,14 +1,16 @@
 // app.js
 const express = require("express");
 const session = require("express-session");
-const { MongoStore } = require("connect-mongo");  
+const { MongoStore } = require("connect-mongo");
 const MemberController = require("./controllers/member.controller");
 const cors = require("cors");
 const memberRoutes = require("./routes/member.route");
 const authRoutes = require("./routes/auth.route");
 const requireAuth = require("./middlewares/auth.middleware");
 const documentRoutes = require("./routes/document.route");
+const paymentRoutes = require("./routes/payment.route");
 const { handleRegistrationUpload } = require("./middlewares/upload.middleware");
+
 
 const app = express();
 
@@ -40,5 +42,6 @@ app.post("/members/add", handleRegistrationUpload, MemberController.register);
 app.use("/members", requireAuth, memberRoutes);
 app.use("/auth", authRoutes);
 app.use("/documents", requireAuth, documentRoutes);
+app.use("/payment", paymentRoutes)
 
 module.exports = app;
