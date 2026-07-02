@@ -23,8 +23,10 @@ app.use(cors({
 
 app.use(express.json());
 
+app.set('trust proxy', 1);
+
 app.use(session({
-  secret: "supersecret",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
@@ -34,8 +36,8 @@ app.use(session({
     httpOnly: true,
     maxAge: 60 * 60 * 1000,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax'
-  }
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+}
 }));
 
 app.post("/members/add", handleRegistrationUpload, MemberController.register);
