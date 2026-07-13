@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto"); // built into Node, no install needed
 const MemberModel = require("../models/member.model");
+const logger = require("../logger");
 
 // ---- config ----
 const SALT_ROUNDS = 12;
@@ -18,17 +19,17 @@ const generatePassword = () => {
 
 const run = async () => {
   await mongoose.connect(process.env.MONGODB_URI);
-  console.log("Connected to MongoDB\n");
+  logger.info("Connected to MongoDB");
 
   // Find members who don't have a password yet
   const members = await MemberModel.find({ password: { $exists: false } });
 
   if (members.length === 0) {
-    console.log("No members without passwords found.");
+    logger.info("No members without passwords found.");
     process.exit(0);
   }
 
-  console.log(`Found ${members.length} member(s) without passwords:\n`);
+  logger.info({ count: members.length }, "Members without passwords found");
 
   const results = [];
 
@@ -52,19 +53,16 @@ const run = async () => {
       temporaryPassword: plainPassword, // plain text — log once, then gone
     });
 
-    console.log(`✓ ${member.firstName} ${member.lastName} — ${member.email}`);
+    logger.info({ name: `${member.firstName} ${member.lastName}`, email: member.email }, "Password assigned");
   }
 
-  // Print a clean summary table you can copy from terminal
-  console.log("\n======= SAVE THIS — passwords will not be shown again =======\n");
-  console.table(results);
-  console.log("\n=============================================================\n");
+  logger.info({ results }, "Password assignment summary");
 
   await mongoose.disconnect();
   process.exit(0);
 };
 
 run().catch((err) => {
-  console.error("Script failed:", err.message);
+  logger.error({ err }, "Script failed");
   process.exit(1);
 });

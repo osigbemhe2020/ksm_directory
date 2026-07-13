@@ -32,7 +32,8 @@ const login = async (req, res) => {
       email: member.email,
       firstName: member.firstName,
       lastName: member.lastName,
-      mustChangePassword: member.mustChangePassword
+      mustChangePassword: member.mustChangePassword,
+      isAdmin: member.isAdmin
     };
 
     res.status(200).json({

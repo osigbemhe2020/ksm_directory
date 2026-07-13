@@ -83,6 +83,7 @@ const  register = async (req, res) => {
       profilePhoto: profilePhotoUrl,
       password: hashedPassword,
       mustChangePassword: true,
+      isAdmin: false,
     });
 
     // Send welcome email with plain password

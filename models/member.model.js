@@ -21,6 +21,7 @@ const memberSchema = new Schema({
   profilePhoto: { type: String, default: null },
   resetToken:       { type: String },
   resetTokenExpiry: { type: Date },
+  isAdmin: { type: Boolean, default: false },
 });
 
 const Member = mongoose.model("Member", memberSchema, "member_data");

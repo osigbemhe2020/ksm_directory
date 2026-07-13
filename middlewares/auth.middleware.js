@@ -21,4 +21,15 @@ const requireAuth = (req, res, next) => {
   }
 };
 
+// const requireAdmin = (req, res, next) => {
+//   if (req.session && req.session.user && req.session.user.isAdmin) {
+//     next();
+//   } else {
+//     res.status(403).json({
+//       status: "failed",
+//       message: "You do not have permission to access this resource"
+//     });
+//   }
+// };
+
 module.exports = requireAuth;

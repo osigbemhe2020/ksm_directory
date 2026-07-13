@@ -1,3 +1,4 @@
+const logger = require("../logger");
 
 const initializeDonatePayment = async (req, res) => {
     try {
@@ -29,14 +30,14 @@ const initializeDonatePayment = async (req, res) => {
         
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Paystack error:", errorData);
+            logger.error({ errorData }, "Paystack initialization error");
             return res.status(response.status).json(errorData);
         }
         
         const data = await response.json();
         res.json(data);
     } catch (error) {
-        console.log("Payment initialization error:", error);
+        logger.error({ err: error }, "Payment initialization error");
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
@@ -58,14 +59,14 @@ const verifyDonatePayment = async (req, res) => {
         
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Paystack verification error:", errorData);
+            logger.error({ errorData }, "Paystack verification error");
             return res.status(response.status).json(errorData);
         }
         
         const data = await response.json();
         res.json(data);
     } catch (error) {
-        console.log("Payment verification error:", error);
+        logger.error({ err: error }, "Payment verification error");
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
