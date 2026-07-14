@@ -8,7 +8,7 @@ const documentSchema = new Schema({
   url:        { type: String, required: true }, 
   publicId:   { type: String, required: true },
   fileType:   { type: String },                
-  uploadedBy: { type: Schema.Types.ObjectId, ref: 'Member' },
+  uploadedBy: { type: Schema.Types.ObjectId, ref: 'Member', required: true },
   uploadedAt: { type: Date, default: Date.now },
 });
 

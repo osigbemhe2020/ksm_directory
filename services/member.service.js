@@ -14,8 +14,8 @@ const getMembers = async (filters, page, limit) => {
 
   // Exact-ish filters
   if (filters.subCouncil) query.subCouncil = filters.subCouncil;
-if (filters.degree)     query.degree     = filters.degree;
-if (filters.officeHeld) query.officeHeld = filters.officeHeld;
+  if (filters.degree)     query.degree     = filters.degree;
+  if (filters.officeHeld) query.officeHeld = filters.officeHeld;
   if (filters.occupation)         query.occupation         = filters.occupation;
   if (filters.placeOfInitiation)  query.placeOfInitiation  = filters.placeOfInitiation;
   if (filters.yearOfInitiation)   query.yearOfInitiation   = filters.yearOfInitiation; // exact match — it's a numbe
